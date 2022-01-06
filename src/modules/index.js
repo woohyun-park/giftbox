@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import page from "./page";
+import nav from "./nav";
 
 const rootReducer = combineReducers({
-  page,
+  nav,
 });
 
 export default rootReducer;

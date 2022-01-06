@@ -1,12 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
-import PageContainer from "./containers/PageContainer";
+import NavContainer from "./containers/NavContainer";
+import BodyContainer from "./containers/BodyContainer";
 
 function App() {
   return (
-    <div>
-      <PageContainer />
-    </div>
+    <>
+      <BodyContainer />
+      <NavContainer />
+    </>
   );
 }
 
