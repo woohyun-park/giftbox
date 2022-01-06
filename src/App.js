@@ -1,14 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import CounterContainer from "./containers/CounterContainer";
-import TodosContainer from "./containers/TodosContainer";
+import PageContainer from "./containers/PageContainer";
 
 function App() {
   return (
     <div>
-      <CounterContainer />
-      <hr />
-      <TodosContainer />
+      <PageContainer />
     </div>
   );
 }

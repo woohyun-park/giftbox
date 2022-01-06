@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-import counter from "./counter";
-import todos from "./todos";
+import page from "./page";
 
 const rootReducer = combineReducers({
-  counter,
-  todos,
+  page,
 });
 
 export default rootReducer;
