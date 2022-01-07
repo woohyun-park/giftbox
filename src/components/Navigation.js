@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/Navigation.css";
 import {
   BsFillHouseDoorFill,
   BsFillHeartFill,
@@ -11,19 +12,19 @@ import {
 const Navigation = () => (
   <div className="nav">
     <Link to="/">
-      <BsFillHouseDoorFill className="nav__btn" />
+      <img className="nav__btn" src="img/Home.png" />
     </Link>
     <Link to="/like">
-      <BsFillHeartFill className="nav__btn" />
+      <img className="nav__btn" src="img/Like.png" />
     </Link>
     <Link to="/add">
-      <BsFillPlusSquareFill className="nav__btn" />
+      <img className="nav__btn" src="img/Add.png" />
     </Link>
     <Link to="/alarm">
-      <BsFillBellFill className="nav__btn" />
+      <img className="nav__btn" src="img/Alarm.png" />
     </Link>
     <Link to="/profile">
-      <BsFillPersonFill className="nav__btn" />
+      <img className="nav__btn" src="img/Profile.png" />
     </Link>
   </div>
 );

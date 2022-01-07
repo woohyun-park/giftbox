@@ -1,91 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { dbService, storageService } from "../fbase";
+import { useEffect } from "react";
 import Wish from "../components/Wish";
+import { dbService } from "../fbase";
 
 const HomePage = ({ user, wishlist, onSetWish }) => {
-  const [wish, setWish] = useState("");
-  const [attachment, setAttachment] = useState();
-  useEffect(() => {
-    dbService.collection("wishlist").onSnapshot((snapshot) => {
-      const wishArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      onSetWish(wishArray);
+  const getWishlist = async () => {
+    const dbWishlist = await dbService.collection("wishlist").get();
+    const filteredWishlist = [];
+    dbWishlist.forEach((document) => {
+      const wishObject = {
+        ...document.data(),
+        id: document.id,
+      };
+      filteredWishlist.push(wishObject);
     });
+    onSetWish(filteredWishlist);
+  };
+  useEffect(() => {
+    getWishlist();
   }, []);
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    let attachmentUrl = "";
-    if (attachment !== "") {
-      const attachmentRef = storageService
-        .ref()
-        .child(`${user.uid}/${uuidv4()}`);
-      const response = await attachmentRef.putString(attachment, "data_url");
-      attachmentUrl = await response.ref.getDownloadURL();
-    }
-    const wishObj = {
-      text: wish,
-      createdAt: Date.now(),
-      creatorId: user.uid,
-      attachmentUrl,
-    };
-    await dbService.collection("wishlist").add(wishObj);
-    setWish("");
-    setAttachment("");
-  };
-  const onChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setWish(value);
-  };
-  const onFileChange = (e) => {
-    const {
-      target: { files },
-    } = e;
-    const theFile = files[0];
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
-      setAttachment(result);
-    };
-    reader.readAsDataURL(theFile);
-  };
-  const onClearAttachment = () => setAttachment(null);
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          onChange={onChange}
-          placeholder="What's on your mind?"
-          maxLength={120}
-          value={wish}
-        />
-        <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="Wish" />
-        {attachment && (
-          <>
-            <img src={attachment} width="50px" height="50px" />
-            <button onClick={onClearAttachment}>Clear</button>
-          </>
-        )}
-      </form>
-      <div>
-        {wishlist.length !== 0 &&
-          wishlist.map((wish) => (
-            <Wish
-              key={wish.id}
-              wishObj={wish}
-              isOwner={wish.creatorId === user.uid}
-            />
-          ))}
+    <div className="page">
+      <h2 className="page__title">친구 생일엔 뭘 줄까?</h2>
+      <div className="page__friend">
+        {wishlist.map((wish) => (
+          <Wish
+            key={wish.id}
+            wishObj={wish}
+            isOwner={wish.creatorId === user.uid}
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 export default HomePage;

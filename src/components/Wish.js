@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "../fbase";
+import "../styles/Wish.css";
 
 const Wish = ({ wishObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -27,8 +28,12 @@ const Wish = ({ wishObj, isOwner }) => {
     });
     setEditing(false);
   };
+  const numToPrice = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  numToPrice(10000);
   return (
-    <>
+    <div className="wish">
       {editing ? (
         <>
           {isOwner && (
@@ -48,21 +53,22 @@ const Wish = ({ wishObj, isOwner }) => {
           )}
         </>
       ) : (
-        <>
-          <h4>{wishObj.text}</h4>
-
+        <div className="wish__cont">
           {wishObj.attachmentUrl && (
-            <img src={wishObj.attachmentUrl} width="50px" height="50px" />
+            <img src={wishObj.attachmentUrl} className="wish__img" />
           )}
+          <div className="wish__category">#{wishObj.category}</div>
+          <div className="wish__name">{wishObj.name}</div>
+          <div className="wish__price">{numToPrice(wishObj.price)}원</div>
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Wish</button>
               <button onClick={toggleEditing}>Edit Wish</button>
             </>
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,16 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 75px;
+  background: var(--text-color-1);
+  border-radius: 20px 20px 0 0;
+  position: sticky;
+  width: inherit;
+  bottom: 0;
+}
+
+.nav__btn {
+  margin-top: 15px;
+  color: var(--bg-color-1);
+}

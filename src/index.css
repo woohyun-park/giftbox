@@ -13,9 +13,22 @@ code {
 }
 
 /* My Code */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+* {
+  font-family: "Noto Sans", sans-serif;
+}
+
 :root {
+  --primary-color: rgba(246, 112, 58, 1);
+  --secondary-color: rgba(62, 137, 237, 1);
+  --tertiary-color: rgba(71, 179, 138, 1);
+  --background-color: rgba(237, 224, 215, 1);
   --text-color-1: rgba(40, 40, 40, 1);
-  --bg-color-1: rgba(237, 224, 215, 1);
+  --text-color-2: rgba(89, 89, 89, 1);
+  --text-color-3: rgba(149, 149, 149, 1);
+  --box-color-1: rgba(222, 197, 181, 1);
+  --box-color-2: rgba(190, 143, 111, 1);
+
   width: 375px;
   height: 812px;
 }
@@ -23,18 +36,22 @@ code {
 #root {
   width: 375px;
   height: 812px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  background-color: var(--background-color);
 }
 
-.nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  height: 75px;
-  background: var(--text-color-1);
-  border-radius: 20px 20px 0 0;
+#root::-webkit-scrollbar {
+  display: none;
 }
 
-.nav__btn {
-  margin-top: 15px;
-  color: var(--bg-color-1);
+.decorate__primary {
+  color: var(--primary-color);
+}
+.decorate__secondary {
+  color: var(--secondary-color);
+}
+.decorate__tertiary {
+  color: var(--tertiary-color);
 }

@@ -1,0 +1,38 @@
+.wish {
+  position: relative;
+  left: 1rem;
+  bottom: 1rem;
+}
+
+.wish__cont {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  max-width: 11rem;
+}
+
+.wish__img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 1rem;
+}
+
+.wish__category {
+  color: var(--text-color-2);
+  font-size: 0.5rem;
+}
+
+.wish__name {
+  color: var(--text-color-1);
+  font-size: 1rem;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.wish__price {
+  color: var(--text-color-1);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: -0.2rem;
+}

@@ -1,0 +1,21 @@
+.page {
+  width: inherit;
+  height: inherit;
+}
+
+.page__title {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page__full {
+  width: inherit;
+  display: flex;
+  position: relative;
+  left: 1rem;
+  top: 1rem;
+  border-radius: 1rem;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  background-color: rgba(222, 197, 181, 1);
+}
