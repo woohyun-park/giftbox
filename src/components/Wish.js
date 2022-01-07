@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "../fbase";
 
-const Nweet = ({ nweetObj, isOwner }) => {
+const Wish = ({ wishObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
-  const [newNweet, setNewNweet] = useState(nweetObj.text);
+  const [newWish, setnewWish] = useState(wishObj.text);
   const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
     if (ok) {
-      await dbService.doc(`nweets/${nweetObj.id}`).delete();
-      await storageService.refFromURL(nweetObj.attachmentUrl).delete();
+      await dbService.doc(`wishlist/${wishObj.id}`).delete();
+      await storageService.refFromURL(wishObj.attachmentUrl).delete();
     }
   };
   const toggleEditing = () => {
@@ -18,12 +18,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
     const {
       target: { value },
     } = e;
-    setNewNweet(value);
+    setnewWish(value);
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dbService.doc(`nweets/${nweetObj.id}`).update({
-      text: newNweet,
+    await dbService.doc(`wishlist/${wishObj.id}`).update({
+      text: newWish,
     });
     setEditing(false);
   };
@@ -36,12 +36,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
               <form onSubmit={onSubmit}>
                 <input
                   type="text"
-                  placeholder="Edit your nweet"
-                  value={newNweet}
+                  placeholder="Edit your wish"
+                  value={newWish}
                   required
                   onChange={onChange}
                 />
-                <input type="submit" value="Update Nweet" />
+                <input type="submit" value="Update Wish" />
               </form>
               <button onClick={toggleEditing}>Cancel</button>
             </>
@@ -49,15 +49,15 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
-          <h4>{nweetObj.text}</h4>
+          <h4>{wishObj.text}</h4>
 
-          {nweetObj.attachmentUrl && (
-            <img src={nweetObj.attachmentUrl} width="50px" height="50px" />
+          {wishObj.attachmentUrl && (
+            <img src={wishObj.attachmentUrl} width="50px" height="50px" />
           )}
           {isOwner && (
             <>
-              <button onClick={onDeleteClick}>Delete Nweet</button>
-              <button onClick={toggleEditing}>Edit Nweet</button>
+              <button onClick={onDeleteClick}>Delete Wish</button>
+              <button onClick={toggleEditing}>Edit Wish</button>
             </>
           )}
         </>
@@ -66,4 +66,4 @@ const Nweet = ({ nweetObj, isOwner }) => {
   );
 };
 
-export default Nweet;
+export default Wish;

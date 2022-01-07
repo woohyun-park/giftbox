@@ -1,28 +1,17 @@
-// import NavContainer from "./containers/NavContainer";
-// import BodyContainer from "./containers/BodyContainer";
 import { useState, useEffect } from "react";
 import AppRouter from "./components/Router";
 import { authService } from "./fbase";
 
-function App() {
+function App({ user, wishlist, onSetUser, onAddWish }) {
   const [init, setInit] = useState(false);
-  const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj(user);
-      }
+      onSetUser(user);
       setInit(true);
     });
   }, []);
   return (
-    <>
-      {init ? (
-        <AppRouter isLoggedIn={userObj} userObj={userObj} />
-      ) : (
-        "Initializing"
-      )}
-    </>
+    <>{init ? <AppRouter isLoggedIn={user} user={user} /> : "Initializing"}</>
   );
 }
 

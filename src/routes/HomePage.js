@@ -1,57 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "../fbase";
-import Nweet from "../components/Nweet";
+import Wish from "../components/Wish";
 
-const HomePage = ({ userObj }) => {
-  const [nweet, setNweet] = useState("");
-  const [nweets, setNweets] = useState([]);
+const HomePage = ({ user, wishlist, onSetWish }) => {
+  const [wish, setWish] = useState("");
   const [attachment, setAttachment] = useState();
-  const getNweets = async () => {
-    const dbNweets = await dbService.collection("nweets").get();
-    dbNweets.forEach((document) => {
-      const nweetObject = {
-        ...document.data(),
-        id: document.id,
-      };
-      setNweets((prev) => [nweetObject, ...prev]);
-    });
-  };
   useEffect(() => {
-    getNweets();
-    dbService.collection("nweets").onSnapshot((snapshot) => {
-      const nweetArray = snapshot.docs.map((doc) => ({
+    dbService.collection("wishlist").onSnapshot((snapshot) => {
+      const wishArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setNweets(nweetArray);
+      onSetWish(wishArray);
     });
   }, []);
   const onSubmit = async (e) => {
     e.preventDefault();
     let attachmentUrl = "";
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = storageService
         .ref()
-        .child(`${userObj.uid}/${uuidv4()}`);
+        .child(`${user.uid}/${uuidv4()}`);
       const response = await attachmentRef.putString(attachment, "data_url");
       attachmentUrl = await response.ref.getDownloadURL();
     }
-    const nweetObj = {
-      text: nweet,
+    const wishObj = {
+      text: wish,
       createdAt: Date.now(),
-      creatorId: userObj.uid,
+      creatorId: user.uid,
       attachmentUrl,
     };
-    await dbService.collection("nweets").add(nweetObj);
-    setNweet("");
+    await dbService.collection("wishlist").add(wishObj);
+    setWish("");
     setAttachment("");
   };
   const onChange = (e) => {
     const {
       target: { value },
     } = e;
-    setNweet(value);
+    setWish(value);
   };
   const onFileChange = (e) => {
     const {
@@ -76,10 +64,10 @@ const HomePage = ({ userObj }) => {
           onChange={onChange}
           placeholder="What's on your mind?"
           maxLength={120}
-          value={nweet}
+          value={wish}
         />
         <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="Nweet" />
+        <input type="submit" value="Wish" />
         {attachment && (
           <>
             <img src={attachment} width="50px" height="50px" />
@@ -88,13 +76,14 @@ const HomePage = ({ userObj }) => {
         )}
       </form>
       <div>
-        {nweets.map((nweet) => (
-          <Nweet
-            key={nweet.id}
-            nweetObj={nweet}
-            isOwner={nweet.creatorId === userObj.uid}
-          />
-        ))}
+        {wishlist.length !== 0 &&
+          wishlist.map((wish) => (
+            <Wish
+              key={wish.id}
+              wishObj={wish}
+              isOwner={wish.creatorId === user.uid}
+            />
+          ))}
       </div>
     </>
   );

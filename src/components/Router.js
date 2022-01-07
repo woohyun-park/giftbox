@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "../routes/AuthPage";
-import HomePage from "../routes/HomePage";
+import HomePageContainer from "../containers/HomePageContainer";
 import LikePage from "../routes/LikePage";
 import AddPage from "../routes/AddPage";
 import AlarmPage from "../routes/AlarmPage";
 import ProfilePage from "../routes/ProfilePage";
 import Navigation from "./Navigation";
 
-const AppRouter = ({ isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn, user }) => {
   return (
     <BrowserRouter>
-      {isLoggedIn && <Navigation />}
       <Routes>
         {isLoggedIn ? (
           <>
-            <Route exact path="/" element={<HomePage userObj={userObj} />} />
+            <Route exact path="/" element={<HomePageContainer />} />
             <Route exact path="/like" element={<LikePage />} />
             <Route exact path="/add" element={<AddPage />} />
             <Route exact path="/alarm" element={<AlarmPage />} />
@@ -29,6 +28,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
           </>
         )}
       </Routes>
+      {isLoggedIn && <Navigation />}
     </BrowserRouter>
   );
 };
