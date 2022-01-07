@@ -21,8 +21,9 @@ code {
 :root {
   --primary-color: rgba(246, 112, 58, 1);
   --secondary-color: rgba(62, 137, 237, 1);
-  --tertiary-color: rgba(71, 179, 138, 1);
-  --background-color: rgba(237, 224, 215, 1);
+  --tertiary-color: rgb(56, 175, 129);
+  --background-color-1: rgba(237, 224, 215, 1);
+  --background-color-2: rgba(246, 239, 235, 1);
   --text-color-1: rgba(40, 40, 40, 1);
   --text-color-2: rgba(89, 89, 89, 1);
   --text-color-3: rgba(149, 149, 149, 1);
@@ -39,7 +40,7 @@ code {
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
-  background-color: var(--background-color);
+  background-color: var(--background-color-1);
 }
 
 #root::-webkit-scrollbar {

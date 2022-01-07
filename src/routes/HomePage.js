@@ -22,13 +22,17 @@ const HomePage = ({ user, wishlist, onSetWish }) => {
     <div className="page">
       <h2 className="page__title">친구 생일엔 뭘 줄까?</h2>
       <div className="page__friend">
-        {wishlist.map((wish) => (
-          <Wish
-            key={wish.id}
-            wishObj={wish}
-            isOwner={wish.creatorId === user.uid}
-          />
-        ))}
+        {wishlist.map((wish) => {
+          if (user.uid !== wish.creatorId)
+            return (
+              <Wish
+                key={wish.id}
+                wishObj={wish}
+                isOwner={wish.creatorId === user.uid}
+              />
+            );
+          else return;
+        })}
       </div>
     </div>
   );

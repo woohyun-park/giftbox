@@ -5,7 +5,7 @@ import { dbService, storageService } from "../fbase";
 const AddPage = ({ user, onSetWish }) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [attachment, setAttachment] = useState();
   useEffect(() => {
     dbService.collection("wishlist").onSnapshot((snapshot) => {
@@ -63,48 +63,70 @@ const AddPage = ({ user, onSetWish }) => {
     await dbService.collection("wishlist").add(wishObj);
     setName("");
     setCategory("");
-    setPrice(0);
+    setPrice();
     setAttachment("");
   };
   const onClearAttachment = () => setAttachment(null);
 
   return (
     <div className="page">
-      <form onSubmit={onSubmit}>
-        {attachment && (
-          <>
-            <img src={attachment} width="50px" height="50px" />
-            <button onClick={onClearAttachment}>Clear</button>
-          </>
-        )}
-        <input type="file" accept="image/*" onChange={onFileChange} />
-        <input
-          type="text"
-          id="name"
-          onChange={onChange}
-          placeholder="상품명"
-          maxLength={120}
-          value={name}
-          required
-        />
-        <input
-          type="text"
-          id="category"
-          onChange={onChange}
-          placeholder="카테고리"
-          maxLength={120}
-          value={category}
-          required
-        />
-        <input
-          type="number"
-          id="price"
-          onChange={onChange}
-          placeholder="가격"
-          value={price}
-        />
-        <input type="submit" value="Wish" />
-      </form>
+      <h2 className="page__title">
+        어머! 이건 꼭 <span className="decorate__tertiary">사야해</span>
+      </h2>
+      <div className="page__full">
+        <form className="page__form" onSubmit={onSubmit}>
+          {attachment ? (
+            <>
+              <label for="file">
+                <img src={attachment} className="page__img" />
+              </label>
+              {/* <button onClick={onClearAttachment}>Clear</button> */}
+            </>
+          ) : (
+            <>
+              <label for="file">
+                <div className="page__img--empty">+</div>
+              </label>
+            </>
+          )}
+          <input
+            id="file"
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            style={{ display: "none" }}
+          />
+          <input
+            className="page__input"
+            type="text"
+            id="name"
+            onChange={onChange}
+            placeholder="상품명"
+            maxLength={120}
+            value={name}
+            required
+          />
+          <input
+            className="page__input"
+            type="text"
+            id="category"
+            onChange={onChange}
+            placeholder="카테고리"
+            maxLength={120}
+            value={category}
+            required
+          />
+          <input
+            className="page__input"
+            type="number"
+            id="price"
+            onChange={onChange}
+            placeholder="가격"
+            value={price}
+          />
+          <input className="page__add" type="submit" value="등록" />
+        </form>
+      </div>
     </div>
   );
 };
