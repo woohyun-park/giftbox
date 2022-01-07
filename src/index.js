@@ -8,6 +8,9 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./modules";
 import { composeWithDevTools } from "redux-devtools-extension";
+import fbase from "./fbase";
+
+console.log(fbase);
 
 const store = createStore(rootReducer, composeWithDevTools());
 

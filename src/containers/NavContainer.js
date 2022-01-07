@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Nav from "../components/Nav";
+import Nav from "/components/Nav";
 import {
   gotoMain,
   gotoLike,

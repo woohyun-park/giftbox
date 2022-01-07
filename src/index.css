@@ -38,7 +38,3 @@ code {
   margin-top: 15px;
   color: var(--bg-color-1);
 }
-
-.nav__btn--selected {
-  transform: scale(1.2);
-}

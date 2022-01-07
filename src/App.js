@@ -1,13 +1,27 @@
-import logo from "./logo.svg";
-import "./App.css";
-import NavContainer from "./containers/NavContainer";
-import BodyContainer from "./containers/BodyContainer";
+// import NavContainer from "./containers/NavContainer";
+// import BodyContainer from "./containers/BodyContainer";
+import { useState, useEffect } from "react";
+import AppRouter from "./components/Router";
+import { authService } from "./fbase";
 
 function App() {
+  const [init, setInit] = useState(false);
+  const [userObj, setUserObj] = useState(null);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj(user);
+      }
+      setInit(true);
+    });
+  }, []);
   return (
     <>
-      <BodyContainer />
-      <NavContainer />
+      {init ? (
+        <AppRouter isLoggedIn={userObj} userObj={userObj} />
+      ) : (
+        "Initializing"
+      )}
     </>
   );
 }
